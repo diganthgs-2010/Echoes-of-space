@@ -1,0 +1,949 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050812">
+<title>ECHOES OF SPACE — RealLifeEpics</title>
+<style>
+:root {
+  --bg:#050812; --panel:#0d1424; --line:#26344c;
+  --text:#eef4ff; --muted:#a1b0c8;
+  --cyan:#83e8ff; --gold:#f4d59b; --purple:#b8a5ff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  line-height:1.6;overflow-x:hidden;
+}
+button,input,select{font:inherit}
+button,a,select{touch-action:manipulation}
+a{color:var(--cyan)}
+button:focus-visible,a:focus-visible,input:focus-visible,
+select:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+#stars{position:fixed;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:-2}
+.ambient{
+  position:fixed;width:380px;height:380px;border-radius:50%;
+  filter:blur(110px);opacity:.13;pointer-events:none;z-index:-1;
+  background:#4a4aff;top:15%;left:-220px;
+  animation:drift 18s ease-in-out infinite alternate;
+}
+.ambient.two{background:#00bde0;left:auto;right:-240px;top:60%;
+  animation-delay:-8s}
+@keyframes drift{to{transform:translate(100px,-70px) scale(1.25)}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{50%{box-shadow:0 0 30px #83e8ff30}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+@keyframes twinkle{50%{opacity:.25;transform:scale(.7)}}
+@keyframes scan{from{transform:translateY(-100%)}
+  to{transform:translateY(500%)}}
+@keyframes float{50%{transform:translateY(-12px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+header{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;padding:14px clamp(16px,5vw,64px);
+  background:#050812d9;backdrop-filter:blur(16px);
+  border-bottom:1px solid #ffffff12;
+}
+.brand{font-weight:850;letter-spacing:.15em;font-size:.9rem}
+.brand span{color:var(--cyan)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{font-size:.86rem;text-decoration:none;color:var(--muted)}
+nav a:hover{color:white}
+.hero{
+  min-height:82vh;display:grid;place-items:center;text-align:center;
+  padding:75px 20px 90px;position:relative;overflow:hidden;
+}
+.hero-content{max-width:900px;animation:rise 1.2s both}
+.eyebrow{color:var(--cyan);letter-spacing:.25em;font-size:.75rem;
+  text-transform:uppercase;font-weight:700}
+h1{font-size:clamp(2.6rem,8vw,6.5rem);line-height:.98;
+  letter-spacing:-.06em;margin:22px 0}
+h1 span{
+  background:linear-gradient(100deg,#fff,#8ce8ff 45%,#a99aff);
+  color:transparent;background-clip:text;
+}
+.hero p{max-width:660px;color:var(--muted);margin:20px auto}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+  margin-top:28px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 19px;border-radius:30px;border:1px solid var(--line);
+  color:var(--text);background:#10192a;text-decoration:none;cursor:pointer;
+  transition:transform .2s,border-color .2s,background .2s;
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.btn.primary{background:var(--cyan);color:#06101b;border-color:var(--cyan);
+  font-weight:800}
+.hero-orbit{
+  position:absolute;width:min(70vw,560px);aspect-ratio:1;
+  border:1px solid #a1caff17;border-radius:50%;pointer-events:none;
+  animation:orbit 100s linear infinite;
+}
+.hero-orbit:before,.hero-orbit:after{
+  content:"";position:absolute;border:1px solid #a1caff18;border-radius:50%;
+}
+.hero-orbit:before{inset:12%}
+.hero-orbit:after{inset:25%}
+.hero-orbit i{
+  position:absolute;top:16%;left:16%;width:9px;height:9px;
+  background:var(--cyan);border-radius:50%;box-shadow:0 0 18px var(--cyan)
+}
+.hero-planet{
+  position:absolute;width:clamp(110px,20vw,200px);aspect-ratio:1;
+  border-radius:50%;right:12%;top:20%;
+  background:radial-gradient(circle at 30% 25%,#c6f6ff,#4166a4 32%,#182348 65%,#060914 80%);
+  box-shadow:inset -25px -20px 45px #000a,0 0 65px #526dff2a;
+  animation:float 7s ease-in-out infinite;opacity:.65;pointer-events:none;
+}
+section{padding:70px clamp(16px,5vw,64px)}
+.section-head{max-width:850px;margin:0 auto 30px;text-align:center}
+.section-head h2{font-size:clamp(1.9rem,4vw,3.2rem);line-height:1.15;
+  margin:12px 0}
+.section-head p,.muted{color:var(--muted)}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  max-width:850px;margin:36px auto 0;
+}
+.stat{padding:16px;border:1px solid var(--line);background:#0b1220c9;
+  border-radius:16px}
+.stat strong{display:block;font-size:1.6rem;color:var(--cyan)}
+.stat span{font-size:.8rem;color:var(--muted)}
+#archive{scroll-margin-top:80px}
+.filters{
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;
+  max-width:1100px;margin:0 auto 22px;
+}
+input,select{
+  width:100%;min-width:0;background:#0c1423;color:var(--text);
+  border:1px solid var(--line);border-radius:12px;padding:13px;
+}
+input::placeholder{color:#8795ab}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  margin:0 auto 26px}
+.chip{border:1px solid var(--line);border-radius:25px;padding:9px 14px;
+  background:#0b1220;color:var(--muted);cursor:pointer}
+.chip.active,.chip:hover{border-color:var(--cyan);color:var(--cyan)}
+.results-line{max-width:1100px;margin:0 auto 15px;color:var(--muted);
+  font-size:.86rem;display:flex;justify-content:space-between;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:17px;max-width:1100px;margin:auto}
+.card{
+  background:linear-gradient(145deg,#111b2d,#090f1b);
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  cursor:pointer;min-width:0;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.card:hover{transform:translateY(-5px);border-color:#83e8ff88;
+  box-shadow:0 15px 45px #0005}
+.card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.photo{
+  height:190px;position:relative;overflow:hidden;background:
+  radial-gradient(ellipse at 55% 120%,#405a87,#17233b 43%,#070b15 78%);
+}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s,opacity .3s;opacity:0}
+.photo img.loaded{opacity:1}
+.card:hover .photo img{transform:scale(1.05)}
+.photo:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(0deg,#090f1b 0%,transparent 55%);
+}
+.photo .placeholder{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:3rem;color:#c9eaff;opacity:.6;
+}
+.card-content{padding:17px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tag{font-size:.68rem;border:1px solid #83e8ff35;color:var(--cyan);
+  padding:3px 8px;border-radius:20px}
+.tag.status{color:var(--gold);border-color:#f4d59b35}
+.card h3{font-size:1.12rem;margin:8px 0}
+.card p{font-size:.87rem;color:var(--muted);margin:0}
+.card-bottom{display:flex;justify-content:space-between;gap:8px;
+  margin-top:18px;font-size:.8rem;color:var(--cyan)}
+.empty{grid-column:1/-1;text-align:center;padding:50px;color:var(--muted)}
+.note{max-width:850px;margin:28px auto 0;font-size:.8rem;color:var(--muted)}
+.story-grid{max-width:1000px;margin:auto;display:grid;
+  grid-template-columns:repeat(3,1fr);gap:15px}
+.story{
+  border:1px solid var(--line);border-radius:16px;padding:22px;
+  background:#0c1422c9;
+}
+.story .num{color:var(--cyan);font-size:.8rem;letter-spacing:.2em}
+.story h3{margin:12px 0 6px}
+.story p{color:var(--muted);font-size:.9rem}
+footer{border-top:1px solid #ffffff15;padding:35px 20px;text-align:center;
+  color:var(--muted);font-size:.83rem}
+footer strong{color:var(--text)}
+dialog{
+  width:min(900px,94vw);max-height:90vh;padding:0;
+  color:var(--text);background:#080e1b;border:1px solid #526681;
+  border-radius:20px;overflow:auto;box-shadow:0 30px 100px #000b;
+}
+dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
+.modal-top{position:relative;height:clamp(190px,35vw,330px);background:#101a2a}
+.modal-top img{width:100%;height:100%;object-fit:cover}
+.modal-top:after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,#080e1b,transparent 65%)}
+.close{
+  position:absolute;right:12px;top:12px;z-index:2;width:42px;height:42px;
+  border-radius:50%;background:#050812dd;color:white;border:1px solid #ffffff55;
+  cursor:pointer;font-size:1.2rem
+}
+.modal-body{padding:clamp(18px,4vw,36px)}
+.modal-body h2{font-size:clamp(1.8rem,5vw,3rem);line-height:1.1;margin:10px 0}
+.modal-body h3{margin-top:27px}
+.modal-body p{color:#c0ccdf}
+.fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fact{padding:13px;border:1px solid var(--line);border-radius:12px}
+.fact small{display:block;color:var(--muted);font-size:.72rem}
+.fact strong{display:block;margin-top:3px;font-size:.92rem}
+.timeline{border-left:1px solid #3c6680;margin:18px 0 18px 5px;padding-left:20px}
+.event{position:relative;margin:18px 0;color:#c0ccdf}
+.event:before{content:"";position:absolute;left:-25px;top:8px;
+  width:8px;height:8px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan)}
+.sources{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.source{display:inline-block;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;text-decoration:none;font-size:.85rem}
+.source:hover{border-color:var(--cyan)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:800px){
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .story-grid{grid-template-columns:1fr}
+ .hero-planet{right:-35px;top:15%;opacity:.35}
+}
+@media(max-width:540px){
+ header{padding:12px 15px}.brand{font-size:.75rem}
+ nav{gap:11px}nav a{font-size:.75rem}
+ .hero{min-height:74vh}
+ .filters{grid-template-columns:1fr 1fr}
+ .filters input{grid-column:1/-1}
+ .grid{grid-template-columns:1fr}
+ .photo{height:210px}
+ .stats{gap:7px}.stat{padding:10px}.stat strong{font-size:1.3rem}
+ .fact-grid{grid-template-columns:1fr 1fr}
+ section{padding-top:52px;padding-bottom:52px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;
+ transition:none!important}
+ .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="ambient"></div><div class="ambient two"></div>
+
+<header>
+  <a class="brand" href="#" style="text-decoration:none;color:white">
+    REAL<span>LIFE</span>EPICS
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#archive">Archive</a>
+    <a href="#experience">Experience</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-orbit"><i></i></div>
+  <div class="hero-planet"></div>
+  <div class="hero-content">
+    <div class="eyebrow">An independent space-history project</div>
+    <h1>ECHOES<br><span>OF SPACE</span></h1>
+    <p>
+      They travelled farther than any human hand could reach.
+      They explored strange worlds, collected their secrets, and
+      left behind stories written in dust, rock and silence.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="#archive">Explore the archive ↗</a>
+      <a class="btn" href="#experience">Our mission</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong id="total">27</strong><span>Archive entries</span></div>
+      <div class="stat"><strong>2</strong><span>Worlds explored</span></div>
+      <div class="stat"><strong>1960s–</strong><span>Space history</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="archive">
+  <div class="section-head reveal">
+    <div class="eyebrow">The machine archive</div>
+    <h2>Every machine has a story.</h2>
+    <p>Search the explorers, discover their missions, and follow the evidence.
+       Select any dossier to begin.</p>
+  </div>
+
+  <div class="filters">
+    <input id="search" type="search" placeholder="Search missions, machines, discoveries…"
+      aria-label="Search the archive">
+    <select id="world" aria-label="Filter by world">
+      <option value="all">All worlds</option>
+      <option value="Moon">Moon</option>
+      <option value="Mars">Mars</option>
+    </select>
+    <select id="type" aria-label="Filter by machine type">
+      <option value="all">All machine types</option>
+      <option value="Experiment package">Experiment packages</option>
+      <option value="Lander">Landers</option>
+      <option value="Rover">Rovers</option>
+      <option value="Orbiter">Orbiters</option>
+      <option value="Hardware">Mission hardware</option>
+    </select>
+  </div>
+  <div class="chips" aria-label="Quick filters">
+    <button class="chip active" data-filter="all">All stories</button>
+    <button class="chip" data-filter="active">Still active</button>
+    <button class="chip" data-filter="ended">Mission ended</button>
+    <button class="chip" data-filter="unknown">Uncertain ending</button>
+  </div>
+  <div class="results-line"><span id="resultCount">Loading archive…</span>
+    <span>NASA imagery loads when available</span></div>
+  <div class="grid" id="cards" aria-live="polite"></div>
+  <p class="note">
+    Image note: photographs are retrieved from NASA’s Image and Video Library.
+    A search result can show a related mission image rather than the exact
+    machine. Open the NASA image link to inspect its caption and credits.
+    Mission facts and dates should be verified against the linked mission source.
+  </p>
+</section>
+
+<section id="experience">
+  <div class="section-head reveal">
+    <div class="eyebrow">Beyond a list of missions</div>
+    <h2>Explore. Understand. Remember.</h2>
+    <p>Space history becomes more meaningful when the engineering,
+      scientific evidence and human decisions are connected.</p>
+  </div>
+  <div class="story-grid">
+    <article class="story reveal"><div class="num">01 / DISCOVER</div>
+      <h3>Explore the archive</h3>
+      <p>Find machines by destination, type, name or mission outcome.
+        Every entry opens a dedicated dossier.</p></article>
+    <article class="story reveal"><div class="num">02 / INVESTIGATE</div>
+      <h3>Follow the evidence</h3>
+      <p>Read mission facts, scientific contributions, key events and
+        source links. Unknown details stay unknown.</p></article>
+    <article class="story reveal"><div class="num">03 / REMEMBER</div>
+      <h3>Hear the echoes</h3>
+      <p>Each machine is part of a larger story about exploration,
+        discovery, failure and what comes next.</p></article>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-head reveal">
+    <div class="eyebrow">About RealLifeEpics</div>
+    <h2>Independent. Curious. Evidence-led.</h2>
+    <p>ECHOES OF SPACE is an independent educational project. It is not an
+      official NASA website and is not affiliated with or endorsed by NASA.
+      NASA names, photographs and other media remain subject to their
+      respective credit and usage terms.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>ECHOES OF SPACE</strong> · A RealLifeEpics project<br>
+  <span>Every signal tells a story. Every silence leaves a question.</span>
+</footer>
+
+<dialog id="dossier" aria-labelledby="modalTitle">
+  <div class="modal-top">
+    <img id="modalImage" alt="">
+    <button class="close" id="closeModal" aria-label="Close dossier">✕</button>
+  </div>
+  <div class="modal-body" id="modalContent"></div>
+</dialog>
+
+<script>
+/* ---------------- STARFIELD ---------------- */
+(() => {
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+  let stars = [], width = 0, height = 0, frame;
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = innerWidth; height = innerHeight;
+    canvas.width = width * dpr; canvas.height = height * dpr;
+    canvas.style.width = width + "px"; canvas.style.height = height + "px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars = Array.from({length: Math.min(180, Math.floor(width*height/6500))},
+      () => ({x:Math.random()*width,y:Math.random()*height,
+      r:Math.random()*1.4+.25,a:Math.random()*.7+.2,s:Math.random()*.008+.002}));
+  }
+  function draw() {
+    ctx.clearRect(0,0,width,height);
+    for (const s of stars) {
+      s.a += s.s;
+      if(s.a > .95 || s.a < .2) s.s *= -1;
+      ctx.globalAlpha = s.a;
+      ctx.fillStyle = "#d9efff";
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    frame = requestAnimationFrame(draw);
+  }
+  resize(); draw();
+  addEventListener("resize",resize);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) cancelAnimationFrame(frame);
+})();
+
+/* ---------------- MISSION DATA ----------------
+   Image queries search NASA's library at runtime.
+   Each record has its own mission/source reference.
+------------------------------------------------ */
+const records = [
+{
+name:"Apollo 11 EASEP",world:"Moon",type:"Experiment package",year:1969,
+status:"Operations ended",query:"Apollo 11 EASEP lunar surface experiments",
+mission:"Apollo 11",
+summary:"The Early Apollo Scientific Experiments Package began the first sustained scientific experiments deployed by astronauts on the Moon.",
+story:"Apollo 11 is remembered for the first crewed lunar landing. Beyond the historic steps, the astronauts deployed scientific instruments that let researchers study the lunar environment after the crew had returned home.",
+science:"The package included a passive seismometer and a laser-ranging retroreflector. The seismic instrument operated briefly; the reflector remains useful for lunar laser-ranging experiments.",
+ending:"The seismometer stopped operating in August 1969. The retroreflector is a separate scientific legacy and should not be confused with an operating lander.",
+legacy:"A first step toward long-running lunar surface science.",
+timeline:["July 20, 1969 — lunar landing","July 21, 1969 — experiments deployed (UTC dates differ by event)","August 1969 — seismometer operations ended"],
+source:"https://science.nasa.gov/mission/apollo-11/"
+},
+{
+name:"Apollo 12 ALSEP",world:"Moon",type:"Experiment package",year:1969,
+status:"Operations ended",query:"Apollo 12 ALSEP lunar surface experiment station",
+mission:"Apollo 12",
+summary:"A lunar science station deployed by Apollo 12 to investigate the Moon after the astronauts departed.",
+story:"Apollo 12 landed near Surveyor 3. The crew deployed a separate science station, while also visiting the earlier robotic lander—connecting two generations of lunar exploration.",
+science:"ALSEP instruments investigated lunar seismic activity, solar wind and the lunar environment. The exact instrument set varied between Apollo missions.",
+ending:"NASA shut down the Apollo ALSEP stations in September 1977.",
+legacy:"Helped turn the Moon into a long-term scientific observation site.",
+timeline:["November 19, 1969 — Apollo 12 lunar landing","November 1969 — ALSEP deployed","September 30, 1977 — ALSEP operations ended"],
+source:"https://science.nasa.gov/mission/apollo-12/"
+},
+{
+name:"Apollo 14 ALSEP",world:"Moon",type:"Experiment package",year:1971,
+status:"Operations ended",query:"Apollo 14 ALSEP lunar science station",
+mission:"Apollo 14",
+summary:"A scientific experiment station left in the Fra Mauro region by the Apollo 14 crew.",
+story:"Apollo 14 returned astronauts to the lunar surface after the Apollo 13 mission failed to land. Its instruments continued gathering data long after the crew's departure.",
+science:"ALSEP stations measured aspects of lunar seismicity and the space environment. Consult the mission records for the exact instrument configuration.",
+ending:"The Apollo ALSEP network was shut down in 1977.",
+legacy:"Added another location to a distributed network of lunar experiments.",
+timeline:["February 5, 1971 — lunar landing","February 1971 — science station deployed","September 30, 1977 — network shut down"],
+source:"https://science.nasa.gov/mission/apollo-14/"
+},
+{
+name:"Apollo 15 ALSEP",world:"Moon",type:"Experiment package",year:1971,
+status:"Operations ended",query:"Apollo 15 ALSEP lunar surface experiments",
+mission:"Apollo 15",
+summary:"Part of an expanded scientific exploration mission in the Hadley–Apennine region.",
+story:"Apollo 15 combined a longer surface stay with the first use of the Lunar Roving Vehicle on the Moon. The ALSEP station extended the mission's scientific work beyond the astronauts' visit.",
+science:"The Apollo 15 station included instruments for lunar geophysics, including a heat-flow experiment and seismic measurements.",
+ending:"The ALSEP network ended operations in September 1977.",
+legacy:"Supported deeper investigations of the Moon's interior and surface environment.",
+timeline:["July 30, 1971 — lunar landing","July 1971 — station deployed","September 30, 1977 — network shut down"],
+source:"https://science.nasa.gov/mission/apollo-15/"
+},
+{
+name:"Apollo 16 ALSEP",world:"Moon",type:"Experiment package",year:1972,
+status:"Operations ended",query:"Apollo 16 ALSEP lunar surface station",
+mission:"Apollo 16",
+summary:"A lunar experiment station deployed in the Descartes Highlands.",
+story:"Apollo 16 investigated highland terrain and returned samples from a region different from the earlier Apollo landing sites. Its instruments added another point to the lunar science network.",
+science:"The mission's experiments measured lunar seismic activity, heat flow and interactions with the space environment.",
+ending:"The Apollo ALSEP stations were shut down in 1977.",
+legacy:"Extended the geographic and scientific coverage of lunar surface measurements.",
+timeline:["April 21, 1972 — lunar landing","April 1972 — station deployed","September 30, 1977 — network shut down"],
+source:"https://science.nasa.gov/mission/apollo-16/"
+},
+{
+name:"Apollo 17 ALSEP",world:"Moon",type:"Experiment package",year:1972,
+status:"Operations ended",query:"Apollo 17 ALSEP lunar experiment package",
+mission:"Apollo 17",
+summary:"The final Apollo lunar surface experiment station, deployed during the last crewed Moon landing of the Apollo era.",
+story:"Apollo 17 paired geological fieldwork with long-running experiments. The astronauts left, but the instruments remained part of the wider lunar science network.",
+science:"Its experiment package investigated lunar geophysics and the space environment. Individual instruments had different lifetimes and purposes.",
+ending:"NASA ended ALSEP operations in September 1977.",
+legacy:"The final station in a remarkable network of Apollo surface experiments.",
+timeline:["December 11, 1972 — lunar landing","December 1972 — station deployed","September 30, 1977 — ALSEP shutdown"],
+source:"https://science.nasa.gov/mission/apollo-17/"
+},
+{
+name:"Surveyor 1",world:"Moon",type:"Lander",year:1966,
+status:"Mission ended",query:"Surveyor 1 spacecraft on Moon NASA",
+mission:"Surveyor",
+summary:"The first American spacecraft to make a successful soft landing on the Moon.",
+story:"Before astronauts could land safely, engineers needed evidence about the lunar surface. Surveyor 1 arrived, photographed its surroundings and showed that a robotic spacecraft could land and work on the Moon.",
+science:"It returned more than 11,000 images and helped characterize the surface at its landing site.",
+ending:"Its final signal was received in January 1967 after operations were interrupted by the lunar night and spacecraft conditions.",
+legacy:"A major step toward the Apollo lunar landings.",
+timeline:["May 30, 1966 — launch","June 2, 1966 — lunar landing","January 7, 1967 — last contact"],
+source:"https://science.nasa.gov/mission/surveyor-1/"
+},
+{
+name:"Surveyor 2",world:"Moon",type:"Lander",year:1966,
+status:"Failed landing",query:"Surveyor 2 NASA lunar spacecraft",
+mission:"Surveyor",
+summary:"A lunar landing attempt that failed after a mid-course correction problem.",
+story:"Surveyor 2 was intended to continue testing the technology needed for lunar landings. A thruster failed to fire as planned, the spacecraft began tumbling, and the mission could not recover.",
+science:"The mission did not achieve its intended surface investigations.",
+ending:"The spacecraft crashed into the Moon in September 1966. The exact landing point is not firmly established here.",
+legacy:"Its failure illustrates why testing and redundancy matter in planetary exploration.",
+timeline:["September 20, 1966 — launch","September 22, 1966 — mission lost"],
+source:"https://science.nasa.gov/mission/surveyor/"
+},
+{
+name:"Surveyor 3",world:"Moon",type:"Lander",year:1967,
+status:"Mission ended",query:"Surveyor 3 lunar lander Apollo 12 NASA",
+mission:"Surveyor",
+summary:"A robotic lander that later became a destination for Apollo 12 astronauts.",
+story:"Surveyor 3 landed on the Moon in 1967 and studied its surroundings. Two years later, Apollo 12 landed nearby. Astronauts Pete Conrad and Alan Bean visited the old spacecraft and returned selected components to Earth for examination.",
+science:"The lander photographed the surface and used a surface sampler to investigate lunar soil. Returned components offered a rare opportunity to study hardware after years on the Moon.",
+ending:"Contact ended in May 1967. Apollo 12 visited the site in November 1969.",
+legacy:"One of the most memorable links between robotic and human exploration.",
+timeline:["April 17, 1967 — launch","April 20, 1967 — landing","November 1969 — Apollo 12 visit"],
+source:"https://science.nasa.gov/mission/surveyor-3/"
+},
+{
+name:"Surveyor 4",world:"Moon",type:"Lander",year:1967,
+status:"Contact lost",query:"Surveyor 4 lunar lander NASA",
+mission:"Surveyor",
+summary:"A landing attempt that ended when the spacecraft lost contact shortly before its expected touchdown.",
+story:"Surveyor 4 was approaching the lunar surface when communications abruptly stopped. Without telemetry, engineers could not determine exactly what happened in the final moments.",
+science:"The planned surface experiments were not completed.",
+ending:"Contact was lost roughly two and a half minutes before the expected landing. The cause remains uncertain.",
+legacy:"A reminder that a missing signal is not the same as a confirmed explanation.",
+timeline:["July 14, 1967 — launch","July 17, 1967 — contact lost near landing"],
+source:"https://www.jpl.nasa.gov/missions/surveyor-4/"
+},
+{
+name:"Surveyor 5",world:"Moon",type:"Lander",year:1967,
+status:"Mission ended",query:"Surveyor 5 spacecraft lunar surface NASA",
+mission:"Surveyor",
+summary:"A successful robotic lunar landing that carried out surface chemistry measurements.",
+story:"Surveyor 5 demonstrated that a spacecraft could reach the lunar surface and conduct scientific work there. Its experiments helped researchers test ideas about the composition of lunar soil.",
+science:"It used an alpha-scattering instrument to investigate the chemical composition of the surface.",
+ending:"Its active mission ended after completing its primary objectives.",
+legacy:"Helped establish the Moon's surface as a place for direct chemical analysis.",
+timeline:["September 8, 1967 — launch","September 11, 1967 — landing"],
+source:"https://science.nasa.gov/mission/surveyor/"
+},
+{
+name:"Surveyor 6",world:"Moon",type:"Lander",year:1967,
+status:"Mission ended",query:"Surveyor 6 lunar spacecraft hopping on Moon NASA",
+mission:"Surveyor",
+summary:"A successful lander that made a small controlled hop to a nearby location.",
+story:"Surveyor 6 did more than photograph the lunar surface. It fired its engines after landing and moved to a nearby spot, demonstrating that a landed spacecraft could reposition itself.",
+science:"It returned surface images and chemical measurements, including observations after the hop.",
+ending:"The mission ended after its scientific operations.",
+legacy:"A small movement with a big engineering lesson.",
+timeline:["November 7, 1967 — launch","November 10, 1967 — landing","November 17, 1967 — hop"],
+source:"https://science.nasa.gov/mission/surveyor/"
+},
+{
+name:"Surveyor 7",world:"Moon",type:"Lander",year:1968,
+status:"Mission ended",query:"Surveyor 7 lunar lander NASA",
+mission:"Surveyor",
+summary:"The final Surveyor spacecraft landed in the lunar highlands.",
+story:"Surveyor 7 explored a highland site near the crater Tycho. Its images and measurements expanded knowledge beyond the flatter lunar regions investigated by several earlier missions.",
+science:"It returned images and surface-composition measurements from the highlands.",
+ending:"Its mission ended after returning scientific data.",
+legacy:"Completed the Surveyor program's series of robotic lunar landing investigations.",
+timeline:["January 7, 1968 — launch","January 10, 1968 — landing"],
+source:"https://science.nasa.gov/mission/surveyor/"
+},
+{
+name:"Apollo 11 descent stage",world:"Moon",type:"Hardware",year:1969,
+status:"Left on the Moon",query:"Apollo 11 lunar module descent stage Eagle on Moon",
+mission:"Apollo 11",
+summary:"The lower section of the Lunar Module remained on the Moon after the ascent stage departed.",
+story:"The Lunar Module had separate sections for landing and ascent. After the astronauts transferred into the ascent stage to return to orbit, the descent stage stayed behind at the landing site.",
+science:"It was primarily landing and support hardware, not a science station. Scientific instruments deployed nearby were separate objects.",
+ending:"The descent stage remains at the Apollo 11 landing site.",
+legacy:"Part of the physical record of the first crewed lunar landing.",
+timeline:["July 20, 1969 — landing","July 21, 1969 UTC — ascent from the lunar surface"],
+source:"https://science.nasa.gov/mission/apollo-11/"
+},
+{
+name:"Apollo 15 Lunar Roving Vehicle",world:"Moon",type:"Hardware",year:1971,
+status:"Left on the Moon",query:"Apollo 15 Lunar Roving Vehicle rover Moon NASA",
+mission:"Apollo 15",
+summary:"A battery-powered vehicle that expanded the distance astronauts could explore on the Moon.",
+story:"Apollo 15 introduced the Lunar Roving Vehicle. Instead of remaining close to the landing site, astronauts could travel farther across the lunar terrain while carrying tools and samples.",
+science:"The rover supported geological fieldwork and sample collection; it was not an autonomous robot.",
+ending:"The rover was left at the Apollo 15 site when the crew departed.",
+legacy:"Changed the scale of human lunar exploration.",
+timeline:["July 30, 1971 — lunar landing","July 1971 — rover used on the surface"],
+source:"https://science.nasa.gov/mission/apollo-15/"
+},
+{
+name:"Lunokhod 1",world:"Moon",type:"Rover",year:1970,
+status:"Mission ended",query:"Lunokhod 1 Soviet lunar rover NASA",
+mission:"Luna 17 / Lunokhod 1",
+summary:"The first successful remote-controlled rover to operate on another celestial body.",
+story:"Delivered by the Soviet Luna 17 mission, Lunokhod 1 travelled across the lunar surface under control from Earth. Its journey demonstrated a new way to explore terrain too distant for a stationary lander to inspect.",
+science:"It photographed the surface, studied soil properties and used instruments to investigate the lunar environment.",
+ending:"Operations ended in 1971 after an extended period of surface exploration.",
+legacy:"A pioneering chapter in robotic planetary mobility.",
+timeline:["November 17, 1970 — lunar landing","September 1971 — last operations"],
+source:"https://science.nasa.gov/moon/"
+},
+{
+name:"Lunokhod 2",world:"Moon",type:"Rover",year:1973,
+status:"Mission ended",query:"Lunokhod 2 Soviet lunar rover NASA",
+mission:"Luna 21 / Lunokhod 2",
+summary:"A Soviet lunar rover that travelled farther than its predecessor.",
+story:"Lunokhod 2 explored the Moon's surface with cameras and scientific instruments. Its journey showed how mobile robots could investigate several types of terrain during one mission.",
+science:"It photographed the terrain and conducted surface and environmental measurements.",
+ending:"The mission ended in 1973 after the rover's operations were interrupted.",
+legacy:"A milestone in the early history of remote planetary rovers.",
+timeline:["January 15, 1973 — lunar landing","June 1973 — operations ended"],
+source:"https://science.nasa.gov/moon/"
+},
+{
+name:"Viking 1 lander",world:"Mars",type:"Lander",year:1976,
+status:"Contact lost",query:"Viking 1 Mars lander first panorama NASA",
+mission:"Viking 1",
+summary:"The first US spacecraft to operate successfully on the Martian surface.",
+story:"Viking 1 returned panoramic images and carried out experiments designed to investigate the Martian environment, including the question of whether the soil showed signs of biological activity.",
+science:"Its cameras and instruments studied the surface, atmosphere and soil. The life-detection experiments produced results that remain scientifically important and debated in interpretation.",
+ending:"Its final transmission was received on November 11, 1982, after a command error interrupted communications.",
+legacy:"A landmark in Mars surface exploration.",
+timeline:["August 20, 1975 — launch","July 20, 1976 — landing","November 11, 1982 — final transmission"],
+source:"https://science.nasa.gov/mission/viking-1/"
+},
+{
+name:"Viking 2 lander",world:"Mars",type:"Lander",year:1976,
+status:"Mission ended",query:"Viking 2 lander Mars Utopia Planitia NASA",
+mission:"Viking 2",
+summary:"The second Viking lander investigated the Martian surface from Utopia Planitia.",
+story:"Viking 2 complemented its twin mission by exploring a different location. Its images and experiments helped build a more varied picture of Mars rather than relying on observations from a single landing site.",
+science:"It imaged the surface and studied soil, weather and possible biological activity.",
+ending:"The lander stopped operating in 1980 after a failure in its power system.",
+legacy:"Expanded the scientific record from the first generation of successful US Mars landers.",
+timeline:["September 3, 1976 — landing","April 1980 — operations ended"],
+source:"https://www.nasa.gov/missions/viking/"
+},
+{
+name:"Mars Pathfinder lander",world:"Mars",type:"Lander",year:1997,
+status:"Contact lost",query:"Mars Pathfinder Carl Sagan Memorial Station NASA",
+mission:"Mars Pathfinder",
+summary:"A technology-demonstration lander that delivered Sojourner to Mars.",
+story:"Pathfinder used airbags to cushion its landing, then deployed a small rover. Its innovative landing system and relatively low-cost mission design influenced later Mars exploration.",
+science:"The lander photographed the terrain and measured atmospheric conditions. The mission also supported rover operations and analysis of nearby rocks and soil.",
+ending:"The final data transmission was received on September 27, 1997.",
+legacy:"Helped establish a new approach to sending mobile robots to Mars.",
+timeline:["December 4, 1996 — launch","July 4, 1997 — landing","September 27, 1997 — final data transmission"],
+source:"https://science.nasa.gov/mission/mars-pathfinder/"
+},
+{
+name:"Sojourner rover",world:"Mars",type:"Rover",year:1997,
+status:"Contact lost",query:"Sojourner Mars rover next to rock NASA",
+mission:"Mars Pathfinder",
+summary:"A small rover that became the first wheeled vehicle to operate on another planet.",
+story:"Sojourner rolled down a ramp from the Pathfinder lander and approached rocks, taking photographs and making measurements. Its short planned demonstration lasted much longer than expected.",
+science:"Its instruments investigated the composition of rocks and soil while its cameras documented the terrain.",
+ending:"The mission ended when communication with Pathfinder was lost in September 1997.",
+legacy:"Helped prove the value of mobile exploration on Mars.",
+timeline:["July 5, 1997 — rover deployment","September 27, 1997 — mission contact ended"],
+source:"https://www.jpl.nasa.gov/missions/mars-pathfinder-sojourner-rover/"
+},
+{
+name:"Mars Polar Lander",world:"Mars",type:"Lander",year:1999,
+status:"Lost during landing",query:"Mars Polar Lander NASA spacecraft",
+mission:"Mars Polar Lander",
+summary:"A Mars mission lost during its landing sequence in December 1999.",
+story:"Mars Polar Lander was designed to investigate the southern polar region of Mars. The spacecraft reached Mars but contact was lost during the critical landing sequence.",
+science:"The planned surface science was not carried out because the lander did not establish contact after descent.",
+ending:"The exact cause was not conclusively established. The failure investigation identified a likely software-related problem involving the landing sequence.",
+legacy:"Contributed to major changes in mission testing and risk management.",
+timeline:["January 3, 1999 — launch","December 3, 1999 — contact lost during landing"],
+source:"https://science.nasa.gov/mars/"
+},
+{
+name:"Spirit rover",world:"Mars",type:"Rover",year:2004,
+status:"Mission ended",query:"NASA Spirit Mars rover panorama",
+mission:"Mars Exploration Rovers",
+summary:"One of two robotic geologists sent to investigate evidence of ancient water on Mars.",
+story:"Spirit was designed for a short surface mission, but it explored for years. It examined rocks, soil and terrain that helped scientists reconstruct the planet's watery past.",
+science:"It found evidence of past water-related processes and investigated diverse rocks and soils.",
+ending:"Spirit became stuck in soft soil in 2009 and its mission ended after NASA stopped receiving communications in 2010.",
+legacy:"Greatly exceeded its planned mission duration.",
+timeline:["January 3, 2004 — landing","2009 — became immobilized","March 2010 — final communication attempt"],
+source:"https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/"
+},
+{
+name:"Opportunity rover",world:"Mars",type:"Rover",year:2004,
+status:"Mission ended",query:"NASA Opportunity Mars rover Endeavour crater panorama",
+mission:"Mars Exploration Rovers",
+summary:"A rover that turned a planned short mission into nearly fifteen years of exploration.",
+story:"Opportunity travelled far beyond its original mission plan, examining rocks and outcrops that recorded ancient watery environments. Its long journey transformed the scientific understanding of its landing region.",
+science:"It found compelling geological evidence that liquid water had affected parts of ancient Mars.",
+ending:"A planet-wide dust storm obscured sunlight and communications. The final successful communication was received on June 10, 2018; NASA declared the mission over in 2019.",
+legacy:"A remarkable example of endurance in robotic exploration.",
+timeline:["January 25, 2004 — landing","June 10, 2018 — last communication","February 2019 — mission declared complete"],
+source:"https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/"
+},
+{
+name:"Phoenix lander",world:"Mars",type:"Lander",year:2008,
+status:"Mission ended",query:"NASA Phoenix Mars lander robotic arm ice",
+mission:"Phoenix",
+summary:"A polar lander that examined Martian soil and water ice.",
+story:"Phoenix landed in Mars's northern polar region and used a robotic arm to dig into the soil. Its instruments investigated the local environment and helped confirm water ice beneath the surface.",
+science:"It studied soil chemistry, weather and subsurface ice. The landing site offered a close look at a cold, icy Martian environment.",
+ending:"The solar-powered lander was not expected to survive the Martian winter. Contact was lost as seasonal darkness and cold increased.",
+legacy:"Provided direct evidence of water ice accessible near the Martian surface.",
+timeline:["August 4, 2007 — launch","May 25, 2008 — landing","November 2008 — final communication period"],
+source:"https://science.nasa.gov/mission/phoenix/"
+},
+{
+name:"Curiosity rover",world:"Mars",type:"Rover",year:2012,
+status:"Active — verify current status",query:"NASA Curiosity Mars rover selfie Gale crater",
+mission:"Mars Science Laboratory",
+summary:"A mobile laboratory investigating whether Mars ever had environments suitable for microbial life.",
+story:"Curiosity landed inside Gale Crater and began climbing and examining layered rocks. Each stop helps scientists reconstruct how the environment changed through Martian history.",
+science:"Its instruments analyze rocks, soil and atmospheric conditions, including organic compounds and evidence of ancient habitable environments.",
+ending:"Curiosity has continued exploring Mars. Check NASA's current mission page for the latest operational status.",
+legacy:"A major step in understanding Mars as a potentially habitable ancient world.",
+timeline:["November 26, 2011 — launch","August 6, 2012 — landing","Ongoing mission — consult NASA for current updates"],
+source:"https://science.nasa.gov/mission/msl-curiosity/"
+},
+{
+name:"InSight lander",world:"Mars",type:"Lander",year:2018,
+status:"Mission ended",query:"NASA InSight Mars lander solar panels surface",
+mission:"Interior Exploration using Seismic Investigations, Geodesy and Heat Transport",
+summary:"A stationary lander that studied the deep interior of Mars.",
+story:"Unlike a rover that travels across the surface, InSight stayed in one place and listened for marsquakes. Its measurements helped scientists understand the planet's crust, mantle and core.",
+science:"A seismometer detected marsquakes and meteorite impacts, while other instruments investigated heat flow and planetary structure.",
+ending:"Dust reduced the power available to the solar panels. The last contact was December 15, 2022; NASA later retired the mission.",
+legacy:"Revealed important details about the interior structure of Mars.",
+timeline:["May 5, 2018 — launch","November 26, 2018 — landing","December 15, 2022 — last contact"],
+source:"https://www.nasa.gov/missions/insight/nasa-retires-insight-mars-lander-mission-after-years-of-science/"
+}
+];
+
+/* ---------------- ARCHIVE & NASA IMAGES ---------------- */
+const cards = document.getElementById("cards");
+const search = document.getElementById("search");
+const world = document.getElementById("world");
+const type = document.getElementById("type");
+const resultCount = document.getElementById("resultCount");
+const dialog = document.getElementById("dossier");
+const modalImage = document.getElementById("modalImage");
+const modalContent = document.getElementById("modalContent");
+let quickFilter = "all";
+let lastFocused = null;
+const imageCache = new Map();
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+function statusGroup(r) {
+  const s = r.status.toLowerCase();
+  if (s.includes("active")) return "active";
+  if (s.includes("uncertain") || s.includes("unknown")) return "unknown";
+  return "ended";
+}
+function matches(r) {
+  const q = search.value.trim().toLowerCase();
+  const haystack = [r.name,r.world,r.type,r.year,r.status,r.mission,
+    r.summary,r.story,r.science,r.legacy].join(" ").toLowerCase();
+  return (!q || haystack.includes(q))
+    && (world.value === "all" || r.world === world.value)
+    && (type.value === "all" || r.type === type.value)
+    && (quickFilter === "all" || statusGroup(r) === quickFilter);
+}
+function render() {
+  const filtered = records.filter(matches);
+  resultCount.textContent = `${filtered.length} of ${records.length} archive entries`;
+  document.getElementById("total").textContent = records.length;
+  if (!filtered.length) {
+    cards.innerHTML = '<div class="empty">No matching machines. Try a different search.</div>';
+    return;
+  }
+  cards.innerHTML = filtered.map((r) => {
+    const index = records.indexOf(r);
+    return `<article class="card" tabindex="0" role="button"
+      data-index="${index}" aria-label="Open dossier: ${escapeHTML(r.name)}">
+      <div class="photo">
+        <div class="placeholder" aria-hidden="true">✦</div>
+        <img data-image-index="${index}" alt="${escapeHTML(r.name)} — NASA image search result"
+          loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="tags"><span class="tag">${escapeHTML(r.world)}</span>
+          <span class="tag">${escapeHTML(r.type)}</span>
+          <span class="tag status">${escapeHTML(r.year)}</span></div>
+        <h3>${escapeHTML(r.name)}</h3>
+        <p>${escapeHTML(r.summary)}</p>
+        <div class="card-bottom"><span>${escapeHTML(r.status)}</span><span>Open dossier ↗</span></div>
+      </div>
+    </article>`;
+  }).join("");
+  cards.querySelectorAll(".card").forEach(card => {
+    card.addEventListener("click", () => openDossier(Number(card.dataset.index)));
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault(); openDossier(Number(card.dataset.index));
+      }
+    });
+  });
+  observeImages();
+}
+const imageObserver = "IntersectionObserver" in window ?
+  new IntersectionObserver(entries => entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      const img = entry.target;
+      imageObserver.unobserve(img);
+      loadImage(Number(img.dataset.imageIndex), img);
+    }
+  }), {rootMargin:"250px"}) : null;
+
+function observeImages() {
+  document.querySelectorAll("img[data-image-index]").forEach(img => {
+    if(imageObserver) imageObserver.observe(img);
+    else loadImage(Number(img.dataset.imageIndex),img);
+  });
+}
+async function getNASAImage(index) {
+  if(imageCache.has(index)) return imageCache.get(index);
+  const r = records[index];
+  const promise = (async () => {
+    try {
+      const url = "https://images-api.nasa.gov/search?q=" +
+        encodeURIComponent(r.query) + "&media_type=image&page_size=8";
+      const response = await fetch(url);
+      if(!response.ok) throw new Error("NASA image search unavailable");
+      const json = await response.json();
+      const items = json.collection?.items || [];
+      const item = items.find(x => x.links?.some(l => l.rel === "preview")) ||
+                   items.find(x => x.links?.length);
+      if(!item) return null;
+      const data = item.data?.[0] || {};
+      const link = item.links?.find(l => l.rel === "preview")?.href ||
+                   item.links?.[0]?.href;
+      if(!link) return null;
+      return {
+        image:link,
+        title:data.title || r.name,
+        nasaId:data.nasa_id || "",
+        description:data.description || "",
+        credit:data.photographer || data.secondary_creator || "See NASA image record",
+        date:data.date_created || ""
+      };
+    } catch(error) {
+      console.warn("NASA image could not be loaded:", r.name, error);
+      return null;
+    }
+  })();
+  imageCache.set(index,promise);
+  return promise;
+}
+async function loadImage(index,img) {
+  const result = await getNASAImage(index);
+  if(!result || !img.isConnected) return;
+  img.src = result.image;
+  img.onload = () => img.classList.add("loaded");
+  img.onerror = () => { img.removeAttribute("src"); };
+  img.dataset.nasaTitle = result.title;
+  const placeholder = img.parentElement.querySelector(".placeholder");
+  if(placeholder) placeholder.textContent = "✦";
+}
+function sourceLink(url,label) {
+  return `<a class="source" href="${escapeHTML(url)}" target="_blank"
+    rel="noopener noreferrer">${escapeHTML(label)} ↗</a>`;
+}
+async function openDossier(index) {
+  const r = records[index];
+  lastFocused = document.activeElement;
+  modalImage.removeAttribute("src");
+  modalImage.alt = `NASA image search result for ${r.name}`;
+  modalContent.innerHTML = `
+    <div class="tags"><span class="tag">${escapeHTML(r.world)}</span>
+      <span class="tag">${escapeHTML(r.type)}</span>
+      <span class="tag status">${escapeHTML(r.year)}</span></div>
+    <h2 id="modalTitle">${escapeHTML(r.name)}</h2>
+    <p>${escapeHTML(r.summary)}</p>
+    <div class="fact-grid">
+      <div class="fact"><small>Mission / programme</small><strong>${escapeHTML(r.mission)}</strong></div>
+      <div class="fact"><small>Destination</small><strong>${escapeHTML(r.world)}</strong></div>
+      <div class="fact"><small>Machine type</small><strong>${escapeHTML(r.type)}</strong></div>
+      <div class="fact"><small>Recorded status</small><strong>${escapeHTML(r.status)}</strong></div>
+    </div>
+    <h3>The story</h3><p>${escapeHTML(r.story)}</p>
+    <h3>Scientific contribution</h3><p>${escapeHTML(r.science)}</p>
+    <h3>Mission timeline</h3>
+    <div class="timeline">${r.timeline.map(t => `<div class="event">${escapeHTML(t)}</div>`).join("")}</div>
+    <h3>How the mission ended</h3><p>${escapeHTML(r.ending)}</p>
+    <h3>Why it matters</h3><p>${escapeHTML(r.legacy)}</p>
+    <h3>Source trail</h3>
+    <p>Start with the mission source, then check the dates, instrument details
+      and status against official records. Image search results are credited separately.</p>
+    <div class="sources">
+      ${sourceLink(r.source,"Mission source")}
+      <a class="source" id="imageSource" href="https://images.nasa.gov/"
+        target="_blank" rel="noopener noreferrer">NASA image library ↗</a>
+    </div>
+    <p class="muted" style="font-size:.8rem">Editorial note: this is an independent
+      educational archive. Any unverified or uncertain detail should be checked
+      before publication.</p>`;
+  dialog.showModal();
+  const image = await getNASAImage(index);
+  if(image) {
+    modalImage.src = image.image;
+    modalImage.alt = image.title;
+    const imageSource = document.getElementById("imageSource");
+    if(image.nasaId) imageSource.href =
+      "https://images.nasa.gov/details/" + encodeURIComponent(image.nasaId);
+    imageSource.textContent = "Image: " + image.title + " ↗";
+    imageSource.title = "Image credit: " + image.credit +
+      (image.date ? " · " + image.date : "");
+  }
+}
+document.getElementById("closeModal").addEventListener("click",() => dialog.close());
+dialog.addEventListener("click",e => {
+  if(e.target === dialog) dialog.close();
+});
+dialog.addEventListener("close",() => {
+  if(lastFocused && lastFocused.isConnected) lastFocused.focus();
+});
+[search,world,type].forEach(el => el.addEventListener("input",render));
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.addEventListener("click",() => {
+    quickFilter = chip.dataset.filter;
+    document.querySelectorAll(".chip").forEach(c =>
+      c.classList.toggle("active",c === chip));
+    render();
+  });
+});
+
+/* Reveal elements as they enter the screen */
+if("IntersectionObserver" in window &&
+  !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add("visible");
+      revealObserver.unobserve(e.target);
+    }
+  }),{threshold:.12});
+  document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+} else {
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+}
+
+render();
+</script>
+</body>
+</html>
