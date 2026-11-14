@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050812">
-<meta name="description" content="Echoes of Space by RealLifeEpics — explore the stories of spacecraft and scientific equipment left on the Moon and Mars.">
+<meta name="description" content="Echoes of Space by RealLifeEpics — stories of spacecraft and scientific equipment left across the solar system.">
 <title>ECHOES OF SPACE — RealLifeEpics</title>
 <style>
 :root{--bg:#050812;--panel:#0d1424;--line:#26344c;--text:#eef4ff;--muted:#a1b0c8;--cyan:#83e8ff;--gold:#f4d59b;--purple:#b8a5ff}
@@ -12,7 +13,6 @@
 html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.65;overflow-x:hidden}
 button,input,select{font:inherit}
-a{color:var(--cyan)}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
 #stars{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-2}
 .ambient{position:fixed;width:380px;height:380px;border-radius:50%;filter:blur(110px);opacity:.13;pointer-events:none;z-index:-1;background:#4a4aff;top:15%;left:-220px;animation:drift 18s ease-in-out infinite alternate}
@@ -105,8 +105,36 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 .notice{padding:14px;border-left:3px solid var(--gold);background:#f4d59b0b;color:var(--muted);font-size:.86rem;margin-top:22px}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
 .reveal.visible{opacity:1;transform:translateY(0)}
+/* QUIZ */
+.quiz-wrap{max-width:850px;margin:auto}
+.quiz-panel{background:linear-gradient(145deg,#111b2d,#090f1b);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,4vw,34px);box-shadow:0 20px 60px #0003}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.quiz-label{font-size:.78rem;letter-spacing:.16em;color:var(--cyan);font-weight:700}
+.quiz-score{border:1px solid #f4d59b55;color:var(--gold);padding:6px 12px;border-radius:20px;font-size:.82rem}
+.quiz-progress-track{height:7px;background:#26344c;border-radius:20px;overflow:hidden;margin-bottom:25px}
+.quiz-progress{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:20px;transition:width .35s}
+.quiz-question{font-size:clamp(1.2rem,3vw,1.65rem);line-height:1.35;margin:0 0 22px}
+.quiz-options{display:grid;gap:11px}
+.quiz-option{width:100%;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#0b1220;color:var(--text);cursor:pointer;transition:.2s}
+.quiz-option:hover:not(:disabled){border-color:var(--cyan);background:#142237}
+.quiz-option:disabled{cursor:default;opacity:1}
+.quiz-option.correct{border-color:#69d9a4;background:#123126}
+.quiz-option.wrong{border-color:#e58b8b;background:#351b25}
+.quiz-feedback{margin-top:18px;padding:15px;border-radius:12px;background:#101a2a;border:1px solid var(--line);color:var(--muted);display:none}
+.quiz-feedback.show{display:block;animation:rise .3s both}
+.quiz-feedback strong{display:block;margin-bottom:5px;color:var(--cyan)}
+.quiz-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.quiz-count{font-size:.83rem;color:var(--muted)}
+.quiz-button{border:1px solid var(--cyan);background:var(--cyan);color:#06101b;font-weight:800;padding:11px 20px;border-radius:25px;cursor:pointer}
+.quiz-button:disabled{opacity:.35;cursor:not-allowed}
+.quiz-result{text-align:center;padding:25px 5px;display:none}
+.quiz-result h3{font-size:2rem;margin:10px 0;color:var(--cyan)}
+.quiz-result p{color:var(--muted)}
+.quiz-result .final-score{font-size:3.5rem;font-weight:850;color:var(--gold);line-height:1.2}
+.quiz-intro{text-align:center}
+.quiz-intro p{color:var(--muted);max-width:600px;margin:10px auto 22px}
 @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.story-grid{grid-template-columns:1fr}.hero-planet{right:-35px;top:15%;opacity:.35}}
-@media(max-width:540px){header{padding:12px 15px}.brand{font-size:.75rem}nav{gap:11px}nav a{font-size:.75rem}.hero{min-height:74vh}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.grid{grid-template-columns:1fr}.photo{height:210px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:1.3rem}section{padding-top:52px;padding-bottom:52px}.fact-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){header{padding:12px 15px}.brand{font-size:.75rem}nav{gap:11px}nav a{font-size:.75rem}.hero{min-height:74vh}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.grid{grid-template-columns:1fr}.photo{height:210px}.stats{gap:7px}.stat{padding:10px}.stat strong{font-size:1.3rem}section{padding-top:52px;padding-bottom:52px}.fact-grid{grid-template-columns:1fr 1fr}.quiz-controls{align-items:stretch}.quiz-button{flex:1}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -117,7 +145,7 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 <header>
 <a class="brand" href="#" aria-label="RealLifeEpics home">REAL<span>LIFE</span>EPICS</a>
 <nav aria-label="Main navigation">
-<a href="#archive">Archive</a><a href="#experience">Experience</a><a href="#about">About</a>
+<a href="#archive">Archive</a><a href="#experience">Experience</a><a href="#quiz">Quiz</a><a href="#about">About</a>
 </nav>
 </header>
 
@@ -130,8 +158,8 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 <p>They travelled farther than any human hand could reach. They explored strange worlds, collected their secrets, and left behind stories written in dust, rock and silence.</p>
 <div class="actions"><a class="btn primary" href="#archive">Explore the archive ↗</a><a class="btn" href="#experience">Our mission</a></div>
 <div class="stats">
-<div class="stat"><strong id="total">27</strong><span>Archive entries</span></div>
-<div class="stat"><strong>2</strong><span>Worlds explored</span></div>
+<div class="stat"><strong id="total">35</strong><span>Archive entries</span></div>
+<div class="stat"><strong>6</strong><span>Destination regions</span></div>
 <div class="stat"><strong>1960s–</strong><span>Space history</span></div>
 </div>
 </div>
@@ -145,8 +173,26 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 </div>
 <div class="filters">
 <input id="search" type="search" placeholder="Search missions, machines, discoveries…" aria-label="Search the archive">
-<select id="world" aria-label="Filter by world"><option value="all">All worlds</option><option value="Moon">Moon</option><option value="Mars">Mars</option></select>
-<select id="type" aria-label="Filter by machine type"><option value="all">All machine types</option><option value="Experiment package">Experiment packages</option><option value="Lander">Landers</option><option value="Rover">Rovers</option><option value="Orbiter">Orbiters</option><option value="Hardware">Mission hardware</option></select>
+<select id="world" aria-label="Filter by destination">
+<option value="all">All destinations</option>
+<option value="Moon">Moon</option>
+<option value="Mars">Mars</option>
+<option value="Asteroid">Asteroids</option>
+<option value="Dwarf planet">Dwarf planets</option>
+<option value="Deep space">Deep space</option>
+<option value="Earth orbit">Earth orbit</option>
+</select>
+<select id="type" aria-label="Filter by machine type">
+<option value="all">All machine types</option>
+<option value="Experiment package">Experiment packages</option>
+<option value="Lander">Landers</option>
+<option value="Rover">Rovers</option>
+<option value="Orbiter">Orbiters</option>
+<option value="Hardware">Mission hardware</option>
+<option value="Helicopter">Aircraft</option>
+<option value="Space telescope">Space telescopes</option>
+<option value="Flyby spacecraft">Flyby spacecraft</option>
+</select>
 </div>
 <div class="chips" aria-label="Quick filters">
 <button class="chip active" data-filter="all">All stories</button><button class="chip" data-filter="active">Still active</button><button class="chip" data-filter="ended">Mission ended</button><button class="chip" data-filter="unknown">Uncertain ending</button>
@@ -165,6 +211,40 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 </div>
 </section>
 
+<section id="quiz">
+<div class="section-head reveal">
+<div class="eyebrow">Test your space-history knowledge</div>
+<h2>The Echoes Challenge.</h2>
+<p>Ten questions. Ten pieces of space history. How much do you know about the machines that explored our solar system?</p>
+</div>
+<div class="quiz-wrap reveal">
+<div class="quiz-panel">
+<div id="quizIntro" class="quiz-intro">
+<div class="quiz-label">MISSION BRIEFING / 001</div>
+<h3>Are you ready, explorer?</h3>
+<p>Take on ten questions inspired by the missions in the Echoes of Space archive. Learn something new with every answer.</p>
+<button class="quiz-button" id="startQuiz">Begin challenge ↗</button>
+</div>
+<div id="quizGame" hidden>
+<div class="quiz-top"><span class="quiz-label">SPACE HISTORY CHALLENGE</span><span class="quiz-score">Score: <span id="quizScore">0</span></span></div>
+<div class="quiz-progress-track"><div class="quiz-progress" id="quizProgress"></div></div>
+<div class="quiz-count" id="quizCount">Question 1 of 10</div>
+<h3 class="quiz-question" id="quizQuestion"></h3>
+<div class="quiz-options" id="quizOptions"></div>
+<div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+<div class="quiz-controls"><span class="quiz-count" id="quizStatus">Choose your answer.</span><button class="quiz-button" id="nextQuestion" disabled>Next question →</button></div>
+</div>
+<div class="quiz-result" id="quizResult">
+<div class="quiz-label">CHALLENGE COMPLETE</div><h3>Your mission report</h3>
+<div class="final-score"><span id="finalScore">0</span>/10</div>
+<p id="resultMessage"></p><p id="resultDetail"></p>
+<button class="quiz-button" id="restartQuiz">Play again ↻</button>
+</div>
+</div>
+<p class="note">Educational quiz by RealLifeEpics. Questions are based on the mission histories presented in this archive.</p>
+</div>
+</section>
+
 <section id="about">
 <div class="section-head reveal"><div class="eyebrow">About RealLifeEpics</div><h2>Independent. Curious. Evidence-led.</h2><p>ECHOES OF SPACE is an independent educational project. It is not an official NASA website and is not affiliated with or endorsed by NASA. NASA names, photographs and other media remain subject to their respective credit and usage terms.</p></div>
 </section>
@@ -179,7 +259,7 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 
 <script>
 /* STARFIELD */
-(() => {
+(()=>{
  const canvas=document.getElementById("stars"),ctx=canvas.getContext("2d");
  let stars=[],w=0,h=0,frame;
  function resize(){
@@ -198,10 +278,10 @@ dialog::backdrop{background:#02040bdc;backdrop-filter:blur(8px)}
 })();
 
 /*
- * Mission dossier fields:
- * background, objectives, engineering, science, challenges, ending, legacy.
- * The entries are educational summaries. Follow the official source links
- * for detailed instrument specifications and primary mission records.
+ * Archive records include mission history, objectives, engineering,
+ * science, challenges, ending, legacy, timeline and source trail.
+ * The entries are educational summaries; consult linked primary sources
+ * for detailed instrument specifications and mission records.
  */
 const records = [
 {
@@ -263,7 +343,7 @@ name:"Apollo 16 ALSEP",world:"Moon",type:"Experiment package",year:1972,status:"
 summary:"A science station deployed in the lunar highlands near the Descartes region.",
 background:"Apollo 16 explored the lunar highlands, terrain distinct from the mare regions visited on several earlier missions. The crew collected samples and conducted extensive geological observations.",
 objectives:"Extend lunar geophysical measurements to another landing site and complement the Apollo stations already operating.",
-engineering:"Astronauts deployed a central station and multiple instruments. Each experiment was designed for remote measurements, with station components exposed to harsh lunar conditions.",
+engineering:"Astronauts deployed a central station and multiple instruments. The equipment was designed for remote measurements, with station components exposed to harsh lunar conditions.",
 science:"The package added to the Apollo programme's seismic and environmental records. The mission's geological samples also helped scientists reassess the origin of the highland terrain.",
 challenges:"The station depended on its power, electronics and communications functioning across large lunar temperature changes. Individual experiments had different operational histories.",
 ending:"The Apollo ALSEP network was shut down on 30 September 1977.",
@@ -400,6 +480,45 @@ ending:"The rover was parked on the Moon when the astronauts departed. It is now
 legacy:"It changed the scale of human lunar exploration and helped establish the value of mobile surface operations.",
 timeline:["26 July 1971 — Apollo 15 launched","30 July 1971 UTC — lunar landing","July–August 1971 UTC — rover used during surface excursions","The rover remained on the Moon after departure"],
 source:"https://science.nasa.gov/mission/apollo-15/"
+},
+{
+name:"Apollo Lunar Module descent stages",world:"Moon",type:"Hardware",year:1969,status:"Left on the Moon",query:"Apollo lunar module descent stage on lunar surface NASA",mission:"Apollo lunar landing programme",
+summary:"The descent stages of Apollo Lunar Modules remained at their landing sites after astronauts returned to lunar orbit.",
+background:"The Apollo Lunar Module was built in two sections. The descent stage carried the landing engine, legs and surface equipment; the ascent stage carried the crew back to the Command and Service Module.",
+objectives:"Support controlled lunar landings and provide a stable platform for astronauts and surface equipment.",
+engineering:"The descent stage included landing gear, propulsion, fuel and storage for surface equipment. After the ascent stage lifted off, the descent stage remained on the Moon.",
+science:"The stages are mission hardware rather than scientific instruments. Their locations help document the landing sites and the engineering of Apollo surface operations.",
+challenges:"The landing system had to work in vacuum, reduced gravity, abrasive dust and difficult terrain while supporting a crewed spacecraft.",
+ending:"Descent stages from successful Apollo lunar landings were left at their landing sites. Apollo 13 did not land on the Moon.",
+legacy:"These structures are among the most recognisable human-made objects left on another world.",
+timeline:["1969–1972 — Apollo lunar landing missions","After each successful landing — ascent stage departed and descent stage remained"],
+source:"https://science.nasa.gov/moon/exploration/"
+},
+{
+name:"Apollo 16 Lunar Roving Vehicle",world:"Moon",type:"Hardware",year:1972,status:"Left on the Moon",query:"Apollo 16 lunar roving vehicle NASA Moon",mission:"Apollo 16",
+summary:"The second Lunar Roving Vehicle carried astronauts across the lunar highlands.",
+background:"Apollo 16 explored the Descartes highlands. The rover enabled astronauts to visit geological locations beyond walking distance from the Lunar Module.",
+objectives:"Extend crew mobility, carry samples and support geological observations during lunar surface excursions.",
+engineering:"The four-wheel electric rover folded for transport and was deployed on the lunar surface. It was driven by astronauts and carried navigation and communications equipment.",
+science:"The rover enabled the crew to investigate more terrain and collect a wider range of geological samples than would have been practical on foot alone.",
+challenges:"It had to function in lunar dust, vacuum and extreme temperatures, with limited time and no opportunity for ordinary maintenance.",
+ending:"The rover was parked at the Apollo 16 site when the crew departed.",
+legacy:"It demonstrated how mobile surface vehicles could expand the reach of human exploration.",
+timeline:["16 April 1972 — launch","21 April 1972 UTC — lunar landing","April 1972 — rover used during surface excursions","Rover remained on the Moon"],
+source:"https://science.nasa.gov/mission/apollo-16/"
+},
+{
+name:"Apollo 17 Lunar Roving Vehicle",world:"Moon",type:"Hardware",year:1972,status:"Left on the Moon",query:"Apollo 17 lunar roving vehicle NASA Moon",mission:"Apollo 17",
+summary:"The third and final Apollo Lunar Roving Vehicle supported the last crewed Apollo lunar exploration.",
+background:"Apollo 17 explored the Taurus–Littrow valley. The rover supported extensive geological fieldwork during the final Apollo lunar landing mission.",
+objectives:"Carry astronauts and equipment across the surface and allow a wider range of geological observations and sample collection.",
+engineering:"The battery-powered four-wheel vehicle was folded for launch and deployed by the astronauts after landing. It was manually driven and supported navigation and communications.",
+science:"The rover allowed the crew to reach multiple geological locations and collect samples that helped researchers investigate the Moon's history.",
+challenges:"The vehicle operated in vacuum, dust and large temperature changes. It had to remain dependable during limited surface excursions.",
+ending:"The rover was left at the Apollo 17 landing site when the astronauts departed in December 1972.",
+legacy:"It was the last of the Apollo lunar rovers and remains part of the hardware record of the final Apollo Moon landing.",
+timeline:["7 December 1972 — launch","11 December 1972 UTC — lunar landing","December 1972 — rover used during surface excursions","Rover remained on the Moon"],
+source:"https://science.nasa.gov/mission/apollo-17/"
 },
 {
 name:"Lunokhod 1",world:"Moon",type:"Rover",year:1970,status:"Mission ended",query:"Lunokhod 1 Soviet lunar rover",mission:"Soviet Luna 17 / Lunokhod 1",
@@ -558,6 +677,74 @@ ending:"The last contact was on 15 December 2022. NASA retired the mission after
 legacy:"InSight opened a new window into the internal structure and seismic activity of another planet.",
 timeline:["5 May 2018 — launch","26 November 2018 — landing","2019 onward — seismic observations and instrument operations","15 December 2022 — last contact"],
 source:"https://www.nasa.gov/missions/insight/nasa-retires-insight-mars-lander-mission-after-years-of-science/"
+},
+{
+name:"Dawn spacecraft",world:"Dwarf planet",type:"Orbiter",year:2007,status:"Mission ended",query:"NASA Dawn spacecraft Ceres Vesta",mission:"Dawn",
+summary:"A pioneering spacecraft that orbited two major bodies in the asteroid belt: Vesta and dwarf planet Ceres.",
+background:"Dawn was designed to study two large objects left over from the early solar system. By visiting both Vesta and Ceres, it provided a comparative view of two different planetary building blocks.",
+objectives:"Investigate the composition, structure and history of Vesta and Ceres and help scientists understand how the early solar system developed.",
+engineering:"Dawn used ion propulsion, which allowed it to change its orbit over long periods with very efficient use of propellant. It carried cameras, a visible and infrared mapping spectrometer, and a gamma ray and neutron detector.",
+science:"Dawn mapped Vesta and Ceres and revealed evidence of their different geological histories. Its observations of Ceres included bright deposits and evidence of water-related processes.",
+challenges:"The spacecraft needed to navigate between two separate worlds and maintain its orientation for communications and power. Its hydrazine propellant was eventually depleted.",
+ending:"Dawn's mission concluded on 31 October 2018 after it ran out of hydrazine while orbiting Ceres. The spacecraft remains in orbit around the dwarf planet.",
+legacy:"Dawn became the first spacecraft to orbit two extraterrestrial destinations beyond Earth and demonstrated the value of ion propulsion.",
+timeline:["27 September 2007 — launch","16 July 2011 — entered orbit around Vesta","6 March 2015 — arrived at Ceres","31 October 2018 — hydrazine depleted and mission concluded"],
+source:"https://science.nasa.gov/mission/dawn/",
+extra:"Dawn's mission ended because it could no longer control its orientation after propellant depletion. Its spacecraft remains in orbit around Ceres."
+},
+{
+name:"NEAR Shoemaker",world:"Asteroid",type:"Orbiter",year:1996,status:"Mission ended",query:"NASA NEAR Shoemaker spacecraft asteroid Eros",mission:"Near Earth Asteroid Rendezvous",
+summary:"The first spacecraft to orbit an asteroid — and the first to land on one.",
+background:"NEAR Shoemaker was sent to study near-Earth asteroid 433 Eros. It also flew past asteroid Mathilde before reaching its primary target.",
+objectives:"Measure Eros's shape, composition, surface features, internal structure and magnetic properties.",
+engineering:"The spacecraft carried cameras, a magnetometer, spectrometers and a laser rangefinder. It entered orbit around Eros in February 2000 and later made a controlled descent to the surface.",
+science:"NEAR mapped much of Eros and returned about 160,000 images. Its measurements provided important information about asteroid geology and composition.",
+challenges:"The spacecraft's route to Eros had to be revised after a planned engine burn failed. Its final landing was not part of the original design.",
+ending:"NEAR touched down on Eros on 12 February 2001. Surprisingly, it survived the landing and returned data for about two weeks. Last contact came on 28 February 2001.",
+legacy:"NEAR Shoemaker demonstrated that a spacecraft could orbit and even land on an asteroid, opening a new chapter in small-body exploration.",
+timeline:["17 February 1996 — launch","27 June 1997 — Mathilde flyby","14 February 2000 — entered orbit around Eros","12 February 2001 — landed on Eros","28 February 2001 — last contact"],
+source:"https://science.nasa.gov/mission/near-shoemaker/"
+},
+{
+name:"Pioneer 10 and 11",world:"Deep space",type:"Flyby spacecraft",year:1972,status:"No longer communicating",query:"NASA Pioneer 10 Pioneer 11 spacecraft deep space",mission:"Pioneer outer-planet missions",
+summary:"Twin early deep-space explorers that studied Jupiter and Saturn and continued outward on trajectories away from the Sun.",
+background:"Pioneer 10 and Pioneer 11 were designed to explore the outer solar system. They helped prepare the way for later missions by gathering observations in regions that had never been studied close up.",
+objectives:"Investigate the outer planets, the interplanetary environment, magnetic fields and energetic particles.",
+engineering:"Both spacecraft used radioisotope power sources and carried scientific instruments. Each also carried a small engraved plaque describing humanity and the location of the Solar System.",
+science:"Pioneer 10 made the first close-up observations of Jupiter. Pioneer 11 flew past Jupiter and became the first spacecraft to make direct observations of Saturn.",
+challenges:"The spacecraft travelled vast distances, where radio signals became extremely weak and power sources gradually declined. Communication also became harder as their distance from Earth increased.",
+ending:"Pioneer 11's last transmission was received in September 1995. Pioneer 10 sent its last very weak signal in January 2003. Both are now silent.",
+legacy:"The Pioneers helped open the outer solar system to exploration. Their plaques are early attempts to communicate information about Earth to a possible finder.",
+timeline:["2 March 1972 — Pioneer 10 launched","5 April 1973 — Pioneer 11 launched","December 1973 — Pioneer 10 flew past Jupiter","September 1979 — Pioneer 11 flew past Saturn","1995 — Pioneer 11 last transmission","23 January 2003 — Pioneer 10 last signal"],
+source:"https://nssdc.gsfc.nasa.gov/planetary/pioneer10-11.html",
+extra:"Pioneer 10 and 11 are not orbiting planets. They are travelling outward on trajectories that will carry them away from the Solar System."
+},
+{
+name:"Ingenuity helicopter",world:"Mars",type:"Helicopter",year:2021,status:"Mission ended",query:"NASA Ingenuity Mars helicopter on surface Perseverance",mission:"Mars 2020",
+summary:"The first aircraft to achieve powered, controlled flight on another planet.",
+background:"Ingenuity travelled to Mars attached to the Perseverance rover. It began as a technology demonstration designed to test whether powered flight was possible in Mars's thin atmosphere.",
+objectives:"Demonstrate powered flight on Mars and show how aerial scouting could support future planetary exploration.",
+engineering:"The small helicopter used two counter-rotating rotor blades, solar-powered batteries and onboard navigation systems. It communicated with Earth through the Perseverance rover.",
+science:"Its flights demonstrated that aerial vehicles could operate on another planet. It also captured images that helped document the Martian surface and rover routes.",
+challenges:"Mars's atmosphere is extremely thin compared with Earth's, making flight difficult. The helicopter also had to operate with communication delays and autonomous flight planning.",
+ending:"Ingenuity completed 72 flights. On 18 January 2024, rotor blade damage during landing ended its ability to fly. NASA announced the end of the mission on 25 January 2024.",
+legacy:"Ingenuity far exceeded its original plan of up to five test flights and demonstrated a new way to explore other worlds from the air.",
+timeline:["30 July 2020 — launch with Perseverance","18 February 2021 — arrived on Mars","19 April 2021 — first powered flight on another planet","18 January 2024 — final flight and rotor damage","25 January 2024 — mission ended"],
+source:"https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/"
+},
+{
+name:"Kepler Space Telescope",world:"Earth orbit",type:"Space telescope",year:2009,status:"Mission ended",query:"NASA Kepler space telescope spacecraft illustration",mission:"Kepler / K2",
+summary:"A planet-hunting space telescope that transformed the search for planets beyond our Solar System.",
+background:"Kepler was designed to measure tiny changes in the brightness of stars. Scientists used those changes to identify possible planets passing in front of their stars.",
+objectives:"Determine how common Earth-size planets and other planets are around stars in the Milky Way.",
+engineering:"Its photometer continuously monitored the brightness of a large field of stars. The telescope operated in an Earth-trailing heliocentric orbit, following Earth around the Sun.",
+science:"Kepler discovered more than 2,600 confirmed exoplanets and helped show that planets are common throughout the galaxy. Its observations also advanced studies of stars.",
+challenges:"The mission experienced reaction-wheel failures that affected its pointing ability. Engineers developed the K2 mission, which used a different observing strategy to continue science.",
+ending:"Kepler ran out of fuel needed for further science operations. NASA announced its retirement on 30 October 2018, leaving it in its existing safe orbit away from Earth.",
+legacy:"Kepler changed our understanding of planetary systems and provided a foundation for later exoplanet missions.",
+timeline:["7 March 2009 — launch","2012 — end of primary mission","2014 — K2 mission phase began","30 October 2018 — NASA announced retirement"],
+source:"https://science.nasa.gov/mission/kepler/",
+extra:"Kepler is not in an Earth-trailing orbit around the planet. It follows Earth around the Sun in a heliocentric orbit."
 }
 ];
 
@@ -670,6 +857,78 @@ document.querySelectorAll(".chip").forEach(chip=>chip.addEventListener("click",(
  render();
 }));
 
+/* INTERACTIVE QUIZ ENGINE */
+const quizQuestions=[
+{q:"Which spacecraft became the first American spacecraft to make a successful soft landing on the Moon?",options:["Surveyor 1","Surveyor 3","Apollo 11","Lunokhod 1"],answer:0,why:"Surveyor 1 landed successfully on 2 June 1966. Its images and engineering data helped prepare for the Apollo lunar landings."},
+{q:"Which Apollo mission visited the Surveyor 3 spacecraft on the Moon?",options:["Apollo 11","Apollo 12","Apollo 14","Apollo 15"],answer:1,why:"Apollo 12 astronauts Pete Conrad and Alan Bean visited Surveyor 3 in November 1969 and returned selected components to Earth."},
+{q:"What was the name of the first wheeled vehicle to operate on another planet?",options:["Curiosity","Opportunity","Sojourner","Spirit"],answer:2,why:"Sojourner was delivered to Mars by the Pathfinder lander in July 1997. It demonstrated that a small robotic rover could explore another planet."},
+{q:"Which Mars lander confirmed water ice beneath the Martian surface in 2008?",options:["Viking 1","Phoenix","InSight","Mars Pathfinder"],answer:1,why:"NASA's Phoenix lander used its robotic arm to dig into the soil and confirmed water ice beneath the surface near Mars's north polar region."},
+{q:"What did NASA's InSight mission primarily investigate?",options:["The rings of Mars","The Martian atmosphere only","The interior structure of Mars","The moons of Mars"],answer:2,why:"InSight studied the interior of Mars using seismic measurements, heat-flow investigations and radio science."},
+{q:"Which rover travelled more than 45 kilometres on Mars and operated for nearly fifteen years?",options:["Spirit","Sojourner","Curiosity","Opportunity"],answer:3,why:"Opportunity landed in January 2004 and continued operating until 2018. NASA declared the mission over in February 2019."},
+{q:"What made Surveyor 6 especially notable after its initial lunar landing?",options:["It launched a small satellite","It made a controlled hop to a nearby location","It carried astronauts","It returned lunar rocks to Earth"],answer:1,why:"On 17 November 1967, Surveyor 6 fired its engines and moved to a nearby location. It was an early demonstration of post-landing mobility."},
+{q:"Which Apollo 11 instrument continues to support lunar laser-ranging research?",options:["The passive seismic experiment","The television camera","The laser-ranging retroreflector","The solar panels"],answer:2,why:"The Apollo 11 retroreflector still supports laser-ranging measurements from Earth. The passive seismic experiment was a separate instrument."},
+{q:"Lunokhod 1 was built and operated by which country's space programme?",options:["United States","Soviet Union","Japan","France"],answer:1,why:"Lunokhod 1 was a Soviet robotic lunar rover delivered by Luna 17. It is included in the archive as international comparative history."},
+{q:"What happened to NASA's Mars Polar Lander in December 1999?",options:["It landed and began exploring","It entered orbit around Mars","It was lost during its landing sequence","It returned to Earth"],answer:2,why:"Contact was lost during the expected landing on 3 December 1999. The exact physical fate of the spacecraft was never confirmed."}
+];
+
+const quizIntro=document.getElementById("quizIntro"),quizGame=document.getElementById("quizGame"),quizResult=document.getElementById("quizResult"),quizQuestion=document.getElementById("quizQuestion"),quizOptions=document.getElementById("quizOptions"),quizFeedback=document.getElementById("quizFeedback"),quizScore=document.getElementById("quizScore"),quizProgress=document.getElementById("quizProgress"),quizCount=document.getElementById("quizCount"),quizStatus=document.getElementById("quizStatus"),nextQuestion=document.getElementById("nextQuestion");
+let quizOrder=[],quizIndex=0,score=0,answered=false;
+function shuffle(array){
+ const copy=[...array];
+ for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}
+ return copy;
+}
+function startQuiz(){
+ quizOrder=shuffle(quizQuestions);quizIndex=0;score=0;quizScore.textContent=score;
+ quizIntro.hidden=true;quizResult.style.display="none";quizGame.hidden=false;showQuestion();
+}
+function showQuestion(){
+ answered=false;const item=quizOrder[quizIndex];
+ quizCount.textContent=`Question ${quizIndex+1} of ${quizOrder.length}`;
+ quizProgress.style.width=`${(quizIndex/quizOrder.length)*100}%`;
+ quizQuestion.textContent=item.q;quizOptions.innerHTML="";
+ quizFeedback.className="quiz-feedback";quizFeedback.innerHTML="";
+ quizStatus.textContent="Choose your answer.";nextQuestion.disabled=true;
+ nextQuestion.textContent=quizIndex===quizOrder.length-1?"View mission report":"Next question →";
+ item.options.forEach((option,index)=>{
+  const button=document.createElement("button");button.type="button";button.className="quiz-option";
+  button.textContent=String.fromCharCode(65+index)+". "+option;
+  button.addEventListener("click",()=>selectAnswer(index));quizOptions.appendChild(button);
+ });
+}
+function selectAnswer(selected){
+ if(answered)return;answered=true;const item=quizOrder[quizIndex];
+ const buttons=[...quizOptions.querySelectorAll("button")];
+ buttons.forEach((button,index)=>{
+  button.disabled=true;if(index===item.answer)button.classList.add("correct");
+  if(index===selected&&selected!==item.answer)button.classList.add("wrong");
+ });
+ const correct=selected===item.answer;if(correct)score++;
+ quizScore.textContent=score;quizFeedback.className="quiz-feedback show";
+ quizFeedback.innerHTML=`<strong>${correct?"✓ Correct answer!":"Not quite — keep exploring!"}</strong>${esc(item.why)}`;
+ quizStatus.textContent=correct?"Good work, explorer.":"Every answer is another discovery.";
+ quizProgress.style.width=`${((quizIndex+1)/quizOrder.length)*100}%`;nextQuestion.disabled=false;
+}
+function showResults(){
+ quizGame.hidden=true;quizResult.style.display="block";
+ document.getElementById("finalScore").textContent=score;
+ let message="";
+ if(score===10)message="Perfect mission! You've mastered this collection of space history.";
+ else if(score>=8)message="Excellent work! Your space-history knowledge is impressive.";
+ else if(score>=5)message="Great effort! You're building a strong understanding of planetary exploration.";
+ else message="Every explorer starts somewhere. Explore the archive and come back for another mission.";
+ document.getElementById("resultMessage").textContent=message;
+ document.getElementById("resultDetail").textContent=`You answered ${score} out of 10 questions correctly.`;
+ quizProgress.style.width="100%";
+}
+document.getElementById("startQuiz").addEventListener("click",startQuiz);
+document.getElementById("restartQuiz").addEventListener("click",startQuiz);
+nextQuestion.addEventListener("click",()=>{
+ if(!answered)return;
+ if(quizIndex<quizOrder.length-1){quizIndex++;showQuestion()}else{showResults()}
+});
+
+/* SCROLL REVEALS */
 if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
  const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.12});
  document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
