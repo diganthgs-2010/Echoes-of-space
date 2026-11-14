@@ -773,7 +773,7 @@ function render(){
  cards.innerHTML=filtered.map(r=>{
   const i=records.indexOf(r);
   return `<article class="card" tabindex="0" role="button" data-index="${i}" aria-label="Open dossier: ${esc(r.name)}">
-   <div class="photo"><div class="placeholder" aria-hidden="true">✦</div><img data-image-index="${i}" alt="${esc(r.name)} — NASA image search result" loading="lazy"></div>
+   <div class="photo"><div class="placeholder" aria-hidden="true">●•°</div><img data-image-index="${i}" alt="${esc(r.name)} — NASA image search result" loading="lazy"></div>
    <div class="card-content"><div class="tags"><span class="tag">${esc(r.world)}</span><span class="tag">${esc(r.type)}</span><span class="tag status">${esc(r.year)}</span></div>
    <h3>${esc(r.name)}</h3><p>${esc(r.summary)}</p><div class="card-bottom"><span>${esc(r.status)}</span><span>Open dossier ↗</span></div></div>
   </article>`;
