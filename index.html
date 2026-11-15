@@ -906,7 +906,11 @@ async function openDossier(i){
 document.getElementById("closeModal").addEventListener("click",()=>dialog.close());
 dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
 dialog.addEventListener("close",()=>{if(lastFocused&&lastFocused.isConnected)lastFocused.focus()});
-[search,world,type].forEach(el=>el.addEventListener("input",render));
+search.addEventListener("input",render);
+
+[world,type].forEach(el=>{
+ el.addEventListener("change",render);
+});
 document.querySelectorAll(".chip").forEach(chip=>chip.addEventListener("click",()=>{
  quickFilter=chip.dataset.filter;
  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c===chip));
