@@ -377,8 +377,8 @@ legacy:"Surveyor 1's successful landing was a major step toward Apollo and demon
 timeline:["30 May 1966 — launch","2 June 1966 — lunar soft landing","July 1966 — primary mission completed","7 January 1967 — contact ended"],
 source:"https://science.nasa.gov/mission/surveyor-1/"
 },
-{
-name:"Surveyor 2",world:"Moon",type:"Lander",year:1966,status:"Failed landing",query:"Surveyor 2 NASA lunar spacecraft",mission:"Surveyor programme",
+
+name:"Surveyor 2",world:"Moon",type:"Lander",year:1966,status:"Failed landing",query:"Surveyor 2 spacecraft 1966 NASA lunar spacecraft",mission:"Surveyor programme",
 summary:"A lunar landing attempt that failed after a course-correction thruster malfunction.",
 background:"Surveyor 2 was part of NASA's effort to test robotic soft landings before crewed lunar exploration. It was intended to continue collecting data about the Moon's surface.",
 objectives:"Land safely and return surface images and engineering information.",
@@ -796,7 +796,11 @@ async function getNASAImage(i){
    const u="https://images-api.nasa.gov/search?q="+encodeURIComponent(r.query)+"&media_type=image&page_size=8";
    const res=await fetch(u);if(!res.ok)throw new Error("Image search unavailable");
    const json=await res.json(),items=json.collection?.items||[];
-   const item=items.find(x=>x.links?.some(l=>l.rel==="preview"))||items.find(x=>x.links?.length);
+   const candidates=items.filter(x=>x.links?.some(l=>l.rel==="preview")||x.links?.length);
+
+const item=r.name==="Surveyor 2"
+ ? candidates.find(x=>/surveyor\s*2/i.test(x.data?.[0]?.title||"")&&!/surveyor\s*1/i.test(x.data?.[0]?.title||""))
+ : candidates[0];
    if(!item)return null;
    const d=item.data?.[0]||{},link=item.links?.find(l=>l.rel==="preview")?.href||item.links?.[0]?.href;
    if(!link)return null;
