@@ -788,24 +788,75 @@ function render(){
 const imageObserver="IntersectionObserver" in window?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){imageObserver.unobserve(e.target);loadImage(Number(e.target.dataset.imageIndex),e.target)}}),{rootMargin:"250px"}):null;
 function observeImages(){document.querySelectorAll("img[data-image-index]").forEach(img=>{if(imageObserver)imageObserver.observe(img);else loadImage(Number(img.dataset.imageIndex),img)})}
 
+
 async function getNASAImage(i){
  if(imageCache.has(i))return imageCache.get(i);
+
  const r=records[i];
+
  const promise=(async()=>{
   try{
-   const u="https://images-api.nasa.gov/search?q="+encodeURIComponent(r.query)+"&media_type=image&page_size=8";
-   const res=await fetch(u);if(!res.ok)throw new Error("Image search unavailable");
-   const json=await res.json(),items=json.collection?.items||[];
-   const item=r.name==="Surveyor 2"
- ? items.find(x=>/surveyor\s*2/i.test(x.data?.[0]?.title||"") && x.links?.some(l=>l.rel==="preview"))
- : items.find(x=>x.links?.some(l=>l.rel==="preview"))||items.find(x=>x.links?.length);
+   const u="https://images-api.nasa.gov/search?q="+
+    encodeURIComponent(r.query)+
+    "&media_type=image&page_size=30";
+
+   const res=await fetch(u);
+   if(!res.ok)throw new Error("NASA image search unavailable");
+
+   const json=await res.json();
+   const items=json.collection?.items||[];
+
+   const ignored=new Set([
+    "the","and","a","an","rover","lander",
+    "spacecraft","space","telescope","helicopter",
+    "orbiter","experiment","package","station",
+    "vehicle","hardware","mission"
+   ]);
+
+   const required=r.name.toLowerCase()
+    .replace(/[^a-z0-9]+/g," ")
+    .split(" ")
+    .filter(w=>w&&!ignored.has(w));
+
+   const matches=items.filter(x=>{
+    const title=(x.data?.[0]?.title||"").toLowerCase();
+
+    if(r.name==="Pioneer 10 and 11"){
+     return title.includes("pioneer")&&
+      (title.includes("10")||title.includes("11"));
+    }
+
+    return required.every(word=>title.includes(word));
+   });
+
+   const item=matches.find(x=>
+    x.links?.some(l=>l.rel==="preview")
+   );
+
    if(!item)return null;
-   const d=item.data?.[0]||{},link=item.links?.find(l=>l.rel==="preview")?.href||item.links?.[0]?.href;
+
+   const d=item.data?.[0]||{};
+   const link=item.links?.find(l=>l.rel==="preview")?.href;
+
    if(!link)return null;
-   return {image:link,title:d.title||r.name,nasaId:d.nasa_id||"",description:d.description||"",credit:d.photographer||d.secondary_creator||"See NASA image record",date:d.date_created||""};
-  }catch(e){console.warn("NASA image unavailable for",r.name,e);return null}
+
+   return {
+    image:link,
+    title:d.title||r.name,
+    nasaId:d.nasa_id||"",
+    description:d.description||"",
+    credit:d.photographer||d.secondary_creator||"See NASA image record",
+    date:d.date_created||""
+   };
+
+  }catch(e){
+   console.warn("NASA image unavailable for",r.name,e);
+   return null;
+  }
  })();
- imageCache.set(i,promise);return promise;
+
+ imageCache.set(i,promise);
+ return promise;
 }
 
 async function loadImage(i,img){
