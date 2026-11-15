@@ -796,11 +796,7 @@ async function getNASAImage(i){
    const u="https://images-api.nasa.gov/search?q="+encodeURIComponent(r.query)+"&media_type=image&page_size=8";
    const res=await fetch(u);if(!res.ok)throw new Error("Image search unavailable");
    const json=await res.json(),items=json.collection?.items||[];
-   const candidates=items.filter(x=>x.links?.some(l=>l.rel==="preview")||x.links?.length);
-
-const item=r.name==="Surveyor 2"
- ? candidates.find(x=>/surveyor\s*2/i.test(x.data?.[0]?.title||"")&&!/surveyor\s*1/i.test(x.data?.[0]?.title||""))
- : candidates[0];
+   const item=items.find(x=>x.links?.some(l=>l.rel==="preview"))||items.find(x=>x.links?.length);
    if(!item)return null;
    const d=item.data?.[0]||{},link=item.links?.find(l=>l.rel==="preview")?.href||item.links?.[0]?.href;
    if(!link)return null;
